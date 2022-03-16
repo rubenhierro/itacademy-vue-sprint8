@@ -1,5 +1,6 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
+import MenuComponent from './components/MenuComponent.vue';
 
 </script>
 
@@ -11,10 +12,13 @@ import { RouterLink, RouterView } from 'vue-router'
       <a href="#">LOGIN</a> //
       <a href="#">SIGN UP</a>
     </div>
-
+    <MenuComponent />
   </header>
+  
+  <main>
+    <RouterView />
+  </main>
 
-  <RouterView />
 </template>
 
 <style>
