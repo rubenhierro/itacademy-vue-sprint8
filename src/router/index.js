@@ -15,9 +15,16 @@ const router = createRouter({
       component: () => import("../views/StarshipsView.vue"),
     },
     {
-      path: "/starship/:id/:name?",
+      path: "/starship/:id/:name",
       name: "starship",
       component: () => import("../views/StarshipView.vue"),
+      children : [
+        {
+          path: "pilots",
+          name: "pilots",
+          component: () => import("../components/PilotsComponent.vue"),
+        }
+      ]
     },
   ],
 });

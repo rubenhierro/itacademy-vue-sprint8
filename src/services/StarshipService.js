@@ -1,11 +1,10 @@
 export default class {
   getSlug(name) {
-    // console.log(name);
     return name
-      .normalize('NFKD')
+      .normalize("NFKD")
       .toLowerCase()
-      .replace(/[^\w\s-]/g, '')
+      .replace(/[^\w\s-]/g, "")
       .trim()
-      .replace(/[-\s]+/g, '-');
+      .replace(/[-\s]+/g, "-");
   }
 }

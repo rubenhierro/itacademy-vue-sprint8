@@ -1,5 +1,9 @@
 <script>
+import { RouterView } from 'vue-router'
 import DataSource from '../data.json'
+import StarshipService from '../services/StarshipService'
+
+const starshipService = new StarshipService;
 
 export default {
   data() {
@@ -11,24 +15,24 @@ export default {
     id() {
       return parseInt(this.$route.params.id)
     },
+    name() {
+      return this.$route.params.name
+      
+    },
     starship() {
       return this.dataSource.results[this.id]
     }
   },
   methods: {
-    log() {
-      console.log(this.starship);
+    viewPilots() {
+      this.$router.push(`/starship/${this.id}/${this.name}/pilots`)
     }
   }
 }
 </script>
 
 <template>
-  <div>
-    <button
-    @click="log"
-    > yep!</button>
-
+  <div class="starship-item">
     <h1>{{ starship.name }}</h1>
     <h2>{{ starship.model }}</h2>
     <ul>
@@ -43,8 +47,18 @@ export default {
       <li>MGLT: {{ starship.MGLT  }}</li>
       <li>Starship Class: {{ starship.starship_class  }}</li>
     </ul>
+    <button
+    v-if="starship.pilots.length > 0"
+    @click="viewPilots"
+    >View Pilots</button>
+  </div>
+  <div class="pilots">
+    <RouterView />
   </div>
 </template>
 
 <style>
+.pilots {
+  margin-top: 10px;
+}
 </style>
