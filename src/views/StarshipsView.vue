@@ -1,5 +1,9 @@
 <script>
+import { RouterLink } from 'vue-router'
 import DataSource from '../data.json'
+import StarshipService from '../services/StarshipService'
+
+const starshipService = new StarshipService;
 
 export default {
   data() {
@@ -13,8 +17,9 @@ export default {
     }
   },
   methods: {
-    viewStarship(index) {
-      console.log(index)
+    viewStarship(starship, index) {
+     const slug = starshipService.getSlug(starship.name)
+     this.$router.push(`/starship/${index}/${slug}`)
     }
   }
 }
@@ -25,7 +30,7 @@ export default {
   <div class="starship"
     v-for="(starship, index) of starships"
     :index="index"
-    @click="viewStarship(index)"
+    @click="viewStarship(starship, index)"
     >
     <h3>{{ starship.name }}</h3>
     <p>{{ starship.model}}</p>
