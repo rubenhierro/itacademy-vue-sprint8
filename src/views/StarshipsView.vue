@@ -19,7 +19,7 @@ export default {
   methods: {
     viewStarship(starship, index) {
      const slug = starshipService.getSlug(starship.name)
-     this.$router.push(`/starship/${index}/${slug}`)
+     this.$router.push(`/starships/${index}/${slug}`)
     }
   }
 }

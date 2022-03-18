@@ -1,6 +1,7 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import MenuComponent from './components/MenuComponent.vue';
+import MenuLoginComponent from './components/MenuLoginComponent.vue';
 
 </script>
 
@@ -9,12 +10,12 @@ import MenuComponent from './components/MenuComponent.vue';
     <img alt="Star Wars logo" class="logo" src="@/assets/logo-star-wars.png"  height="75" />
 
     <div class="login">
-      <a href="#">LOGIN</a> //
-      <a href="#">SIGN UP</a>
+      <!-- menu login component -->
+      <MenuLoginComponent />
     </div>
     <MenuComponent />
   </header>
-  
+
   <main>
     <RouterView />
   </main>

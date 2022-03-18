@@ -20,7 +20,6 @@ export default {
   methods: {
     selectedItem(index) {
       this.activeItem = index;
-      console.log(index);
     },
   }
 

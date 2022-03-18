@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     viewPilots() {
-      this.$router.push(`/starship/${this.id}/${this.name}/pilots`)
+      this.$router.push(`/starships/${this.id}/${this.name}/pilots`)
     }
   }
 }
