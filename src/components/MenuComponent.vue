@@ -1,15 +1,42 @@
-<script setup>
-  import { RouterLink } from 'vue-router';
+<script>
+import { RouterLink } from 'vue-router'
+
+export default {
+  data() {
+    return {
+      activeItem: null,
+      items: [
+        {
+          name: 'Home',
+          path: '/'
+        },
+        {
+          name: 'Starships',
+          path: '/starships'
+        },        
+      ]
+    }
+  },
+  methods: {
+    selectedItem(index) {
+      this.activeItem = index;
+      console.log(index);
+    },
+  }
+
+}
 </script>
 
 <template>
 <div class="menu">
   <ul class="menu-list">
-    <li class="menu-item">
-      <router-link to="/">Home</router-link>
-    </li>
-    <li class="menu-item active">
-      <router-link to="/starships">Starships</router-link>
+    <li
+    v-for="(item, index) of items"
+    :key="index"
+    :class="{ active: index === activeItem}"
+    @click="selectedItem(index)"
+    >
+    <router-link :to="item.path">{{item.name}}</router-link>
     </li>
   </ul>
 </div>
@@ -40,7 +67,7 @@ li {
   padding: 5px;
 }
 
-li + .active {
+.active {
   border-bottom: 3px solid red;
 }
 </style>
