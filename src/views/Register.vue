@@ -8,54 +8,49 @@ export default {
   data() {
     return {
       userList: JSON.parse(localStorage.getItem('userList')) || [],
-      hasUser: null,
-      hasPassword: null,
-      isLogged: window.user,
+      hasUser: false,
       username: '',
       password: ''
     }
   },
   methods: {
-    login() {
+    register() {
       const name = this.username
       const pw = this.password
       const user = new User(name, pw)
       this.hasUser = loginService.hasUser(this.userList, user)
-      this.hasPassword = loginService.hasPassword(this.userList, user)
-      if (this.hasUser && this.hasPassword) {
+
+      if (!this.hasUser) {
+        this.userList.push(user)
+        console.log(this.userList);
+        loginService.setUser(this.userList)
         loginService.setIsLogged(true)
+        window.user = true
         this.$router.push({ name: 'starships' })
+      } else {
+        document.getElementById('register-form').reset()
       }
-    },
-    logout() {
-      loginService.setIsLogged(false)
-      this.isLogged = false
     }
   }
 }
 </script>
 <template>
-  <div v-if="!isLogged" class="login-form">
+  <div class="register-form">
     <div class="form">
-      <h1>Login</h1>
-      <form id="login-form" @submit.prevent="login">
+      <h1>Register</h1>
+      <form id="register-form" @submit.prevent="register">
         <label for="username">User name:</label>
         <input type="text" id="username" v-model="username" required />
         <br />
-        <p class="alert" v-if="hasUser === false">Sorry, this user don't exists!</p>
         <label for="password">Password:</label>
         <input type="password" id="password" v-model="password" required />
-        <p class="alert" v-if="hasPassword === false">Incorrect password!</p>
         <br />
-        <button>Login</button>
+        <button>Create Account</button>
       </form>
+      <p class="alert" v-if="hasUser">Sorry, this user already exists!</p>
       <span>Already have an account?</span>
-      <router-link :to="{ name: 'register' }">Create an account</router-link>
+      <router-link :to="{ name: 'login' }">Sign in</router-link>
     </div>
-  </div>
-  <div v-else>
-    <h3>User already logged</h3>
-    <a href="#" @click="logout">LOGOUT</a>
   </div>
 </template>
 

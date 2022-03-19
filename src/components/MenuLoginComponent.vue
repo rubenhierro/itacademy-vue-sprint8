@@ -6,32 +6,23 @@ const loginService = new LoginService()
 export default {
   data() {
     return {
-      isLogged: loginService.getIsLogged()
+      isLogged: window.user
     }
   },
   methods: {
-    login() {
-      loginService.setIsLogged(true)
-      this.isLogged = true
-    },
     logout() {
       loginService.setIsLogged(false)
       this.isLogged = false
-
+      this.$router.push({ name: 'login' })
     }
   },
 }
 </script>
 <template>
-  <div v-if="!isLogged">
-      <a href="#"
-      @click="login"
-      >LOGIN</a> //
-      <a href="#">SIGN UP</a>
+  <div v-if="isLogged === false">
+    <router-link :to="{name: 'login' }">LOGIN</router-link>
   </div>
   <div v-else>
-      <a href="#"
-      @click="logout"
-      >LOGOUT</a>
+    <a href="#" @click="logout">LOGOUT</a>
   </div>
 </template>

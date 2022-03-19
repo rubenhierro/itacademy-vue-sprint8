@@ -19,22 +19,14 @@ const router = createRouter({
       meta: {
         requiresAuth: true,
       },
-      beforeEnter: (to, from) => {
-        if (!loginService.getIsLogged()) {
-          console.log(`Entra i es ${loginService.getIsLogged()}`);
-          return { name: "login" };
-        } else {
-          console.log(loginService.getIsLogged());
-        }
-
-
-        // return false;
-      },
     },
     {
       path: "/starships/:id/:name",
       name: "starship",
       component: () => import("../views/StarshipView.vue"),
+      meta: {
+        requiresAuth: true,
+      },
       children: [
         {
           path: "pilots",
@@ -48,13 +40,18 @@ const router = createRouter({
       name: "login",
       component: () => import("../views/Login.vue"),
     },
+    {
+      path: "/register",
+      name: "register",
+      component: () => import("../views/Register.vue"),
+    },
   ],
 });
 
-// router.beforeEach((to, from) => {
-//   if (to.meta.requiresAuth && loginService.getIsLogged() === false) {
-//     return { name: "login" };
-//   }
-// });
+router.beforeEach((to, from) => {
+  if (to.meta.requiresAuth && !window.user) {
+    return { name: "login" };
+  }
+});
 
 export default router;
