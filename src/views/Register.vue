@@ -9,6 +9,7 @@ export default {
     return {
       userList: JSON.parse(localStorage.getItem('userList')) || [],
       hasUser: false,
+      isLogged: window.user,
       username: '',
       password: ''
     }
@@ -25,7 +26,6 @@ export default {
         console.log(this.userList);
         loginService.setUser(this.userList)
         loginService.setIsLogged(true)
-        window.user = true
         this.$router.push({ name: 'starships' })
       } else {
         document.getElementById('register-form').reset()
@@ -35,7 +35,7 @@ export default {
 }
 </script>
 <template>
-  <div class="register-form">
+  <div v-if="!isLogged" class="register-form">
     <div class="form">
       <h1>Register</h1>
       <form id="register-form" @submit.prevent="register">
@@ -51,6 +51,10 @@ export default {
       <span>Already have an account?</span>
       <router-link :to="{ name: 'login' }">Sign in</router-link>
     </div>
+  </div>
+  <div v-else>
+    <h3>User already logged</h3>
+    <a href="#" @click="logout">LOGOUT</a>
   </div>
 </template>
 
