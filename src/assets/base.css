@@ -58,3 +58,21 @@ input:valid {
 .alert {
   color: red;
 }
+
+.form {
+  padding: 20px;
+  border: 1px solid white;
+  border-radius: 12px;
+  margin-top: 20px;
+  width: 450px;
+}
+
+.container {
+  display: flex;
+  justify-content: center;;
+}
+.v-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;;
+}

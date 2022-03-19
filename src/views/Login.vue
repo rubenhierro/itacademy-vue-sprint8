@@ -35,27 +35,30 @@ export default {
 }
 </script>
 <template>
-  <div v-if="!isLogged" class="login-form">
+  <div class="container">
     <div class="form">
-      <h1>Login</h1>
-      <form id="login-form" @submit.prevent="login">
-        <label for="username">User name:</label>
-        <input type="text" id="username" v-model="username" required />
-        <br />
-        <p class="alert" v-if="hasUser === false">Sorry, this user don't exists!</p>
-        <label for="password">Password:</label>
-        <input type="password" id="password" v-model="password" required />
-        <p class="alert" v-if="hasPassword === false">Incorrect password!</p>
-        <br />
-        <button>Login</button>
-      </form>
-      <span>Already have an account?</span>
-      <router-link :to="{ name: 'register' }">Create an account</router-link>
+      <div v-if="!isLogged">
+        <h1>Login</h1>
+        <form id="login-form" @submit.prevent="login">
+          <label for="username">User name:</label>
+          <input type="text" id="username" v-model="username" required />
+          <br />
+          <p class="alert" v-if="hasUser === false">Sorry, this user don't exists!</p>
+          <label for="password">Password:</label>
+          <input type="password" id="password" v-model="password" required />
+          <p class="alert" v-if="hasPassword === false">Incorrect password!</p>
+          <br />
+          <button>Login</button>
+        </form>
+        <span>Already have an account?</span>
+        <router-link :to="{ name: 'register' }">Create an account</router-link>
+      </div>
+
+      <div v-else class="v-container">
+        <h3>User already logged</h3>        
+        <a href="#" @click="logout">LOGOUT</a>
+      </div>
     </div>
-  </div>
-  <div v-else>
-    <h3>User already logged</h3>
-    <a href="#" @click="logout">LOGOUT</a>
   </div>
 </template>
 

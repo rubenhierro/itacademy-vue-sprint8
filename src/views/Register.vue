@@ -35,8 +35,8 @@ export default {
 }
 </script>
 <template>
-  <div v-if="!isLogged" class="register-form">
-    <div class="form">
+  <div class="container">
+    <div v-if="!isLogged" class="form">
       <h1>Register</h1>
       <form id="register-form" @submit.prevent="register">
         <label for="username">User name:</label>
@@ -48,13 +48,15 @@ export default {
         <button>Create Account</button>
       </form>
       <p class="alert" v-if="hasUser">Sorry, this user already exists!</p>
+      
       <span>Already have an account?</span>
       <router-link :to="{ name: 'login' }">Sign in</router-link>
     </div>
-  </div>
-  <div v-else>
-    <h3>User already logged</h3>
-    <a href="#" @click="logout">LOGOUT</a>
+
+    <div v-else v-container>
+      <h3>User already logged</h3>
+      <a href="#" @click="logout">LOGOUT</a>
+    </div>
   </div>
 </template>
 
