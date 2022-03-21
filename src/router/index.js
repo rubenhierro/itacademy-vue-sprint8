@@ -17,7 +17,8 @@ const router = createRouter({
       name: "starships",
       component: () => import("../views/StarshipsView.vue"),
       meta: {
-        requiresAuth: true,
+        // change to true
+        requiresAuth: false,
       },
     },
     {
@@ -25,7 +26,8 @@ const router = createRouter({
       name: "starship",
       component: () => import("../views/StarshipView.vue"),
       meta: {
-        requiresAuth: true,
+        // change to true
+        requiresAuth: false,
       },
       children: [
         {

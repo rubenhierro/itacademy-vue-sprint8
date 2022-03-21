@@ -31,6 +31,9 @@ export default {
       loginService.setIsLogged(false)
       this.isLogged = false
     }
+  },
+  mounted() {
+    this.$refs.input.focus()
   }
 }
 </script>
@@ -41,7 +44,7 @@ export default {
         <h1>Login</h1>
         <form id="login-form" @submit.prevent="login">
           <label for="username">User name:</label>
-          <input type="text" id="username" v-model="username" required />
+          <input ref="input" type="text" id="username" v-model="username" required />
           <br />
           <p class="alert" v-if="hasUser === false">Sorry, this user don't exists!</p>
           <label for="password">Password:</label>
@@ -55,7 +58,7 @@ export default {
       </div>
 
       <div v-else class="v-container">
-        <h3>User already logged</h3>        
+        <h3>User already logged</h3>
         <a href="#" @click="logout">LOGOUT</a>
       </div>
     </div>

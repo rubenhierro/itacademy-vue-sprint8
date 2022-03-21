@@ -1,6 +1,4 @@
-<script>
-import { RouterLink } from 'vue-router'
-import DataSource from '../data.json'
+<script> 
 import StarshipService from '../services/StarshipService'
 
 const starshipService = new StarshipService;
@@ -8,34 +6,41 @@ const starshipService = new StarshipService;
 export default {
   data() {
     return {
-      datasource: DataSource
-    }
-  },
-  computed: {
-    starships() {
-      return this.datasource.results;
+      datasource: null,
+      starships: null
     }
   },
   methods: {
     viewStarship(starship, index) {
-     const slug = starshipService.getSlug(starship.name)
-     this.$router.push(`/starships/${index}/${slug}`)
+      const slug = starshipService.getSlug(starship.name)
+      this.$router.push(`/starships/${index}/${slug}`)
+    },
+
+    async getData() {
+      const res = await fetch('https://swapi.dev/api/starships/')
+      this.datasource = await res.json()
+      this.starships =  this.datasource.results
+      console.log(this.starships);
     }
-  }
+  },
+  async mounted() {
+    this.getData();
+  },
 }
 </script>
 
 <template>
-<div class="starships">
-  <div class="starship"
-    v-for="(starship, index) of starships"
-    :index="index"
-    @click="viewStarship(starship, index)"
+  <div class="starships" v-if="datasource">
+    <div
+      class="starship"
+      v-for="(starship, index) of starships"
+      :index="index"
+      @click="viewStarship(starship, index)"
     >
-    <h3>{{ starship.name }}</h3>
-    <p>{{ starship.model}}</p>
+      <h3>{{ starship.name }}</h3>
+      <p>{{ starship.model }}</p>
+    </div>
   </div>
-</div>
 </template>
 
 <style>

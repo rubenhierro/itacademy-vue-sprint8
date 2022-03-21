@@ -31,6 +31,9 @@ export default {
         document.getElementById('register-form').reset()
       }
     }
+  },
+  mounted() {
+    this.$refs.input.focus()
   }
 }
 </script>
@@ -40,7 +43,7 @@ export default {
       <h1>Register</h1>
       <form id="register-form" @submit.prevent="register">
         <label for="username">User name:</label>
-        <input type="text" id="username" v-model="username" required />
+        <input ref="input" type="text" id="username" v-model="username" required />
         <br />
         <label for="password">Password:</label>
         <input type="password" id="password" v-model="password" required />
