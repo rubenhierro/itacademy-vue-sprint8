@@ -22,7 +22,7 @@ const router = createRouter({
       },
     },
     {
-      path: "/starships/:id/:name",
+      path: "/starships/:id/:name?",
       name: "starship",
       component: () => import("../views/StarshipView.vue"),
       meta: {

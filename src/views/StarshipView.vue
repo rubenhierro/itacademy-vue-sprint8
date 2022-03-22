@@ -7,7 +7,7 @@ export default {
   data() {
     return {
       dataSource: null,
-      starship: null
+      starship: null,
     }
   },
   computed: {
@@ -17,6 +17,11 @@ export default {
     name() {
       return this.$route.params.name
     },
+    getImageUrl() {
+      const id = this.id % 10;
+      console.log(id);
+      return new URL(`../assets/${id}.jpg`, import.meta.url).href
+    }
   },
   methods: {
     viewPilots() {
@@ -37,6 +42,7 @@ export default {
 
 <template>
   <div class="starship-item" v-if="starship">
+    <img :src="getImageUrl" width="600" alt="hola" />
     <h1>{{ starship.name }}</h1>
     <h2>{{ starship.model }}</h2>
     <ul>

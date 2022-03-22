@@ -1,13 +1,14 @@
-<script> 
+<script>
 import StarshipService from '../services/StarshipService'
-
+import Observer from '../components/Observer.vue'
 const starshipService = new StarshipService;
 
 export default {
   data() {
     return {
       datasource: null,
-      starships: null
+      starships: [],
+      page: 1,
     }
   },
   methods: {
@@ -16,15 +17,20 @@ export default {
       this.$router.push(`/starships/${index}/${slug}`)
     },
 
-    async getData() {
-      const res = await fetch('https://swapi.dev/api/starships/')
+    async intersected() {
+      const res = await fetch(`https://swapi.dev/api/starships/?page=${this.page}`)
+
+      this.page++
       this.datasource = await res.json()
-      this.starships =  this.datasource.results
+      this.starships = [...this.starships, ...this.datasource.results]
       console.log(this.starships);
     }
   },
-  async mounted() {
-    this.getData();
+  components: {
+    Observer,
+  },
+  mounted() {
+    this.intersected()
   },
 }
 </script>
@@ -40,6 +46,7 @@ export default {
       <h3>{{ starship.name }}</h3>
       <p>{{ starship.model }}</p>
     </div>
+    <Observer @intersect="intersected" />
   </div>
 </template>
 
