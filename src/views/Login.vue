@@ -3,13 +3,14 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import LoginService from "../services/LoginService"
 import User from "../classes/userClass"
+import { LoginStore } from '../stores/LoginStore'
 
+const store = LoginStore()
 const router = useRouter()
 const loginService = new LoginService()
-const userList = ref(JSON.parse(localStorage.getItem('userList')) || [])
+
 const hasUser = ref(null)
 const hasPassword = ref(null)
-const isLogged = ref(window.user)
 const username = ref('')
 const password = ref('')
 const input = ref(null)
@@ -19,17 +20,18 @@ function login() {
   const name = username.value
   const pw = password.value
   const user = new User(name, pw)
-  hasUser.value = loginService.hasUser(userList.value, user)
-  hasPassword.value = loginService.hasPassword(userList.value, user)
+  hasUser.value = store.hasUser(user)
+  hasPassword.value = store.hasUser(user)
+
   if (hasUser.value && hasPassword.value) {
-    loginService.setIsLogged(true)
+    store.setIsLogged(true)
     router.push({ name: 'starships' })
   }
 }
 
 function logout() {
-  loginService.setIsLogged(false)
-  isLogged.value = false
+  store.setIsLogged(false)
+  location.reload()
 }
 
 onMounted(() => input.value.focus())
@@ -38,7 +40,7 @@ onMounted(() => input.value.focus())
 <template>
   <div class="container">
     <div class="form">
-      <div v-if="!isLogged">
+      <div v-if="!store.isLogged">
         <h1>Login</h1>
         <form id="login-form" @submit.prevent="login">
           <label for="username">User name:</label>

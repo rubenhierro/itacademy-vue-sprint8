@@ -5,20 +5,34 @@ export const starshipStore = defineStore({
   state: () => ({
     dataSource: [],
     starships: [],
+    pilots: [],
     id: null,
     page: 1,
   }),
   getters: {
-
+    starship: (state) => state.starships[state.id],
+    pilotsArr: (state) => state.starship.pilots,
   },
   actions: {
-    loadStarships() {
-      const res = await fetch(`https://swapi.dev/api/starships/?page=${this.page}`)
+    async loadStarships() {
+      const res = await fetch(
+        `https://swapi.dev/api/starships/?page=${this.page}`
+      );
 
-      this.page++
-      this.datasource = await res.json()
-      this.starships = [...this.starships, ...this.datasource.results]
-      console.log(this.starships);
+      this.page++;
+      this.datasource = await res.json();
+      this.starships = [...this.starships, ...this.datasource.results];
+    },
+    setId(id) {
+      this.id = id;
+    },
+
+    async loadPilots() {
+      for (const pilotURL of this.pilotsArr) {
+        const res = await fetch(`${pilotURL}`);
+        const pilot = await res.json();
+        this.pilots = [...this.pilots, pilot];
+      }
     },
   },
 });

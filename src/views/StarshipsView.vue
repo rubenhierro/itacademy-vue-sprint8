@@ -3,13 +3,11 @@ import { ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import StarshipService from '../services/StarshipService'
 import Observer from '../components/Observer.vue'
+import { starshipStore } from '../stores/StarshipsStore'
 
+const store = starshipStore()
 const router = useRouter()
 const starshipService = new StarshipService;
-
-const datasource = ref(null)
-const starships = ref([])
-const page = ref(1)
 
 function viewStarship(starship, index) {
   const slug = starshipService.getSlug(starship.name)
@@ -17,22 +15,16 @@ function viewStarship(starship, index) {
 }
 
 async function intersected() {
-  const res = await fetch(`https://swapi.dev/api/starships/?page=${page.value}`)
-
-  page.value++
-  datasource.value = await res.json()
-  starships.value = [...starships.value, ...datasource.value.results]
-  console.log(starships.value);
+  store.loadStarships()
 }
 
 onMounted(() => intersected())
 </script>
-
 <template>
-  <div class="starships" v-if="datasource">
+  <div class="starships" v-if="store.dataSource">
     <div
       class="starship"
-      v-for="(starship, index) of starships"
+      v-for="(starship, index) of store.starships"
       :index="index"
       @click="viewStarship(starship, index)"
     >

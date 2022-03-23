@@ -1,14 +1,12 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import LoginService from "../services/LoginService"
 import User from "../classes/userClass"
+import { LoginStore } from '../stores/LoginStore'
 
+const store = LoginStore()
 const router = useRouter()
-const loginService = new LoginService()
-const userList = ref(JSON.parse(localStorage.getItem('userList')) || [])
 const hasUser = ref(null)
-const isLogged = ref(window.user)
 const username = ref('')
 const password = ref('')
 const input = ref(null)
@@ -17,22 +15,26 @@ function register() {
   const name = username.value
   const pw = password.value
   const user = new User(name, pw)
-  hasUser.value = loginService.hasUser(userList.value, user)
+  hasUser.value = store.hasUser(user)
 
   if (!hasUser.value) {
-    userList.value = [...userList.value, user]
-    loginService.setUser(userList.value)
-    loginService.setIsLogged(true)
+    store.setUser(user)
+    store.setIsLogged(true)
     router.push({ name: 'starships' })
   } else {
     document.getElementById('register-form').reset()
   }
 }
+
+function logout() {
+  store.setIsLogged(false)
+  location.reload()
+}
 onMounted(() => input.value.focus())
 </script>
 <template>
   <div class="container">
-    <div v-if="!isLogged" class="form">
+    <div v-if="!store.isLogged" class="form">
       <h1>Register</h1>
       <form id="register-form" @submit.prevent="register">
         <label for="username">User name:</label>

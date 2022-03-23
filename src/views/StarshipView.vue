@@ -1,12 +1,16 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import { starshipStore } from '../stores/StarshipsStore'
+import { storeToRefs } from 'pinia'
 
+const store = starshipStore()
+const { starship } = storeToRefs(store)
 const router = useRouter()
 const route = useRoute()
-const datasource = ref(null)
-const starship = ref(null)
+
 const id = computed(() => parseInt(route.params.id))
+store.setId(id.value)
 const name = computed(() => route.params.name)
 const getImageUrl = computed(() => {
   const image = id.value % 10;
@@ -16,15 +20,6 @@ const getImageUrl = computed(() => {
 function viewPilots() {
   router.push(`/starships/${id.value}/${name.value}/pilots`)
 }
-
-async function getData() {
-  const res = await fetch('https://swapi.dev/api/starships/')
-  datasource.value = await res.json()
-  starship.value = datasource.value.results[id.value]
-}
-
-onMounted(() => getData())
-
 </script>
 
 <template>

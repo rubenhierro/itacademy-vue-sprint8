@@ -1,25 +1,15 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
+import { starshipStore } from '../stores/StarshipsStore'
+import { storeToRefs } from 'pinia'
+
+const store = starshipStore()
+const { starship, pilots } = storeToRefs(store)
 
 const route = useRoute()
-const datasource = ref(null)
-const pilotsArr = ref(null)
-const pilots = ref([])
-const id = computed(() => parseInt(route.params.id))
 
-async function getData() {
-  const res = await fetch('https://swapi.dev/api/starships/')
-  datasource.value = await res.json()
-  pilotsArr.value = datasource.value.results[id.value].pilots
-
-  for (const pilotURL of pilotsArr.value) {
-    const res = await fetch(`${pilotURL}`)
-    const pilot = await res.json()
-    pilots.value = [...pilots.value, pilot]
-  }
-}
-onMounted(() => getData())
+onMounted(() => store.loadPilots())
 </script>
 <template>
   <div class="pilots" v-if="pilots">
