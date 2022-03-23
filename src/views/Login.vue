@@ -1,41 +1,39 @@
-<script>
+<script setup>
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import LoginService from "../services/LoginService"
 import User from "../classes/userClass"
 
+const router = useRouter()
 const loginService = new LoginService()
+const userList = ref(JSON.parse(localStorage.getItem('userList')) || [])
+const hasUser = ref(null)
+const hasPassword = ref(null)
+const isLogged = ref(window.user)
+const username = ref('')
+const password = ref('')
+const input = ref(null)
 
-export default {
-  data() {
-    return {
-      userList: JSON.parse(localStorage.getItem('userList')) || [],
-      hasUser: null,
-      hasPassword: null,
-      isLogged: window.user,
-      username: '',
-      password: ''
-    }
-  },
-  methods: {
-    login() {
-      const name = this.username
-      const pw = this.password
-      const user = new User(name, pw)
-      this.hasUser = loginService.hasUser(this.userList, user)
-      this.hasPassword = loginService.hasPassword(this.userList, user)
-      if (this.hasUser && this.hasPassword) {
-        loginService.setIsLogged(true)
-        this.$router.push({ name: 'starships' })
-      }
-    },
-    logout() {
-      loginService.setIsLogged(false)
-      this.isLogged = false
-    }
-  },
-  mounted() {
-    this.$refs.input.focus()
+
+function login() {
+  const name = username.value
+  const pw = password.value
+  const user = new User(name, pw)
+  hasUser.value = loginService.hasUser(userList.value, user)
+  hasPassword.value = loginService.hasPassword(userList.value, user)
+  if (hasUser.value && hasPassword.value) {
+    loginService.setIsLogged(true)
+    router.push({ name: 'starships' })
   }
 }
+
+function logout() {
+  loginService.setIsLogged(false)
+  isLogged.value = false
+}
+
+onMounted(() => input.value.focus())
+
 </script>
 <template>
   <div class="container">
