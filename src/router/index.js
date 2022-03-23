@@ -1,8 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-import LoginService from "../services/LoginService";
-
-const loginService = new LoginService();
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -18,7 +15,7 @@ const router = createRouter({
       component: () => import("../views/StarshipsView.vue"),
       meta: {
         // change to true
-        requiresAuth: false,
+        requiresAuth: true,
       },
     },
     {
@@ -27,7 +24,7 @@ const router = createRouter({
       component: () => import("../views/StarshipView.vue"),
       meta: {
         // change to true
-        requiresAuth: false,
+        requiresAuth: true,
       },
       children: [
         {
@@ -51,7 +48,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from) => {
-  if (to.meta.requiresAuth && !window.user) {
+  if (to.meta.requiresAuth && !JSON.parse(localStorage.getItem("isLogged"))) {
     return { name: "login" };
   }
 });

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import User from "../classes/userClass"
 import { LoginStore } from '../stores/LoginStore'
@@ -9,7 +9,6 @@ const router = useRouter()
 const hasUser = ref(null)
 const username = ref('')
 const password = ref('')
-const input = ref(null)
 
 function register() {
   const name = username.value
@@ -25,12 +24,6 @@ function register() {
     document.getElementById('register-form').reset()
   }
 }
-
-function logout() {
-  store.setIsLogged(false)
-  location.reload()
-}
-onMounted(() => input.value.focus())
 </script>
 <template>
   <div class="container">
@@ -53,7 +46,7 @@ onMounted(() => input.value.focus())
 
     <div v-else v-container>
       <h3>User already logged</h3>
-      <a href="#" @click="logout">LOGOUT</a>
+      <a href="#" @click="store.logout">LOGOUT</a>
     </div>
   </div>
 </template>

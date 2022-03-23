@@ -1,20 +1,16 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import LoginService from "../services/LoginService"
 import User from "../classes/userClass"
 import { LoginStore } from '../stores/LoginStore'
 
 const store = LoginStore()
 const router = useRouter()
-const loginService = new LoginService()
-
 const hasUser = ref(null)
 const hasPassword = ref(null)
 const username = ref('')
 const password = ref('')
 const input = ref(null)
-
 
 function login() {
   const name = username.value
@@ -28,14 +24,6 @@ function login() {
     router.push({ name: 'starships' })
   }
 }
-
-function logout() {
-  store.setIsLogged(false)
-  location.reload()
-}
-
-onMounted(() => input.value.focus())
-
 </script>
 <template>
   <div class="container">
@@ -59,7 +47,7 @@ onMounted(() => input.value.focus())
 
       <div v-else class="v-container">
         <h3>User already logged</h3>
-        <a href="#" @click="logout">LOGOUT</a>
+        <a href="#" @click="store.logout">LOGOUT</a>
       </div>
     </div>
   </div>
