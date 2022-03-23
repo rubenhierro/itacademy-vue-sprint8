@@ -1,38 +1,31 @@
-<script>
+<script setup>
+import { ref, onMounted } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import StarshipService from '../services/StarshipService'
 import Observer from '../components/Observer.vue'
+
+const router = useRouter()
 const starshipService = new StarshipService;
 
-export default {
-  data() {
-    return {
-      datasource: null,
-      starships: [],
-      page: 1,
-    }
-  },
-  methods: {
-    viewStarship(starship, index) {
-      const slug = starshipService.getSlug(starship.name)
-      this.$router.push(`/starships/${index}/${slug}`)
-    },
+const datasource = ref([])
+const starships = ref([])
+const page = ref(1)
 
-    async intersected() {
-      const res = await fetch(`https://swapi.dev/api/starships/?page=${this.page}`)
-
-      this.page++
-      this.datasource = await res.json()
-      this.starships = [...this.starships, ...this.datasource.results]
-      console.log(this.starships);
-    }
-  },
-  components: {
-    Observer,
-  },
-  mounted() {
-    this.intersected()
-  },
+function viewStarship(starship, index) {
+  const slug = starshipService.getSlug(starship.name)
+  router.push(`/starships/${index}/${slug}`)
 }
+
+async function intersected() {
+  const res = await fetch(`https://swapi.dev/api/starships/?page=${page.value}`)
+
+  page.value++
+  datasource.value = await res.json()
+  starships.value = [...starships.value, ...datasource.value.results]
+  console.log(starships.value);
+}
+
+onMounted(() => intersected())
 </script>
 
 <template>

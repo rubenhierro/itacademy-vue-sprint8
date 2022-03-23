@@ -10,7 +10,6 @@ import MenuLoginComponent from './components/MenuLoginComponent.vue';
     <img alt="Star Wars logo" class="logo" src="@/assets/logo-star-wars.png"  height="75" />
 
     <div class="login">
-      <!-- menu login component -->
       <MenuLoginComponent />
     </div>
     <MenuComponent />
