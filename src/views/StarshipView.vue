@@ -1,43 +1,31 @@
-<script>
-import StarshipService from '../services/StarshipService'
+<script setup>
+import { ref, computed, onMounted } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 
-const starshipService = new StarshipService;
+const router = useRouter()
+const route = useRoute()
+const datasource = ref([])
+const starship = ref(null)
 
-export default {
-  data() {
-    return {
-      dataSource: null,
-      starship: null,
-    }
-  },
-  computed: {
-    id() {
-      return parseInt(this.$route.params.id)
-    },
-    name() {
-      return this.$route.params.name
-    },
-    getImageUrl() {
-      const id = this.id % 10;
-      console.log(id);
-      return new URL(`../assets/${id}.jpg`, import.meta.url).href
-    }
-  },
-  methods: {
-    viewPilots() {
-      this.$router.push(`/starships/${this.id}/${this.name}/pilots`)
-    },
+const id = computed(() => parseInt(route.params.id))
+const name = computed(() => route.params.name)
+const getImageUrl = computed(() => {
+  const image = id.value % 10;
+  return new URL(`../assets/${image}.jpg`, import.meta.url).href
+})
 
-    async getData() {
-      const res = await fetch('https://swapi.dev/api/starships/')
-      this.datasource = await res.json()
-      this.starship = this.datasource.results[this.id]
-    }
-  },
-  async mounted() {
-    this.getData();
-  },
+function viewPilots() {
+  router.push(`/starships/${id}/${name}/pilots`)
 }
+
+async function getData() {
+  const res = await fetch('https://swapi.dev/api/starships/')
+  datasource.value = await res.json()
+  starship.value = datasource.value.results[id.value]
+}
+
+onMounted(() => getData())
+
 </script>
 
 <template>
@@ -59,6 +47,7 @@ export default {
     </ul>
     <button v-if="starship.pilots.length > 0" @click="viewPilots">View Pilots</button>
   </div>
+  <div v-else>Loading...</div>
   <div class="pilots">
     <RouterView />
   </div>

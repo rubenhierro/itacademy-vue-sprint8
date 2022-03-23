@@ -7,7 +7,7 @@ import Observer from '../components/Observer.vue'
 const router = useRouter()
 const starshipService = new StarshipService;
 
-const datasource = ref([])
+const datasource = ref(null)
 const starships = ref([])
 const page = ref(1)
 
@@ -41,6 +41,7 @@ onMounted(() => intersected())
     </div>
     <Observer @intersect="intersected" />
   </div>
+  <div v-else>Loading...</div>
 </template>
 
 <style>
