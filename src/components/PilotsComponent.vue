@@ -1,39 +1,29 @@
-<script>
-export default {
-  data() {
-    return {
-      dataSource: null,
-      pilotsArr: null,
-      pilots: []
-    }
-  },
-  computed: {
-    id() {
-      return this.$route.params.id
-    },
-  },
-  methods: {
-    async getData() {
-      const res = await fetch('https://swapi.dev/api/starships/')
-      this.datasource = await res.json()
-      this.pilotsArr = this.datasource.results[this.id].pilots
+<script setup>
+import { ref, computed, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
 
-      for (const pilotURL of this.pilotsArr) {
-        const res = await fetch(`${pilotURL}`)
-        const pilot = await res.json()
-        console.log(pilot);
-        this.pilots.push(pilot)
-      }
-    }
-  },
-  async mounted() {
-    this.getData();
-  },
+const route = useRoute()
+const datasource = ref(null)
+const pilotsArr = ref(null)
+const pilots = ref([])
+const id = computed(() => parseInt(route.params.id))
+
+async function getData() {
+  const res = await fetch('https://swapi.dev/api/starships/')
+  datasource.value = await res.json()
+  pilotsArr.value = datasource.value.results[id.value].pilots
+
+  for (const pilotURL of pilotsArr.value) {
+    const res = await fetch(`${pilotURL}`)
+    const pilot = await res.json()
+    pilots.value = [...pilots.value, pilot]
+  }
 }
+onMounted(() => getData())
 </script>
 <template>
   <div class="pilots" v-if="pilots">
-    <div v-for="(pilot, index) of this.pilots" :index="index">
+    <div v-for="(pilot, index) of pilots" :index="index">
       <h3>{{ pilot.name }}</h3>
       <ul>
         <li>Height: {{ pilot.height }}</li>

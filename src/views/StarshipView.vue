@@ -4,9 +4,8 @@ import { useRouter, useRoute } from 'vue-router'
 
 const router = useRouter()
 const route = useRoute()
-const datasource = ref([])
+const datasource = ref(null)
 const starship = ref(null)
-
 const id = computed(() => parseInt(route.params.id))
 const name = computed(() => route.params.name)
 const getImageUrl = computed(() => {
@@ -15,7 +14,7 @@ const getImageUrl = computed(() => {
 })
 
 function viewPilots() {
-  router.push(`/starships/${id}/${name}/pilots`)
+  router.push(`/starships/${id.value}/${name.value}/pilots`)
 }
 
 async function getData() {
