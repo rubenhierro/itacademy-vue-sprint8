@@ -4,7 +4,7 @@ export const LoginStore = defineStore({
   id: "login",
   state: () => ({
     users: JSON.parse(localStorage.getItem("userList")) || [],
-    isLogged: JSON.parse(localStorage.getItem("isLogged")) || false
+    isLogged: JSON.parse(localStorage.getItem("isLogged")) || false,
   }),
   getters: {},
   actions: {
@@ -23,11 +23,9 @@ export const LoginStore = defineStore({
     setIsLogged(value) {
       this.isLogged = value;
       localStorage.setItem("isLogged", value);
-      // window.user = value;
     },
     logout() {
       this.setIsLogged(false);
-      // window.user = false;
       location.reload();
     },
   },
