@@ -23,27 +23,29 @@ function viewPilots() {
 </script>
 
 <template>
-  <div class="starship-item" v-if="starship">
-    <img :src="getImageUrl" width="600" alt="hola" />
-    <h1>{{ starship.name }}</h1>
-    <h2>{{ starship.model }}</h2>
-    <ul>
-      <li>Manufacturer: {{ starship.manufacturer }}</li>
-      <li>Cost In Credits: {{ starship.cost_in_credits }}</li>
-      <li>Length: {{ starship.length }}</li>
-      <li>Max Atmosphering Speed: {{ starship.max_atmosphering_speed }}</li>
-      <li>Crew: {{ starship.crew }}</li>
-      <li>cargo Capacity: {{ starship.cargo_capacity }}</li>
-      <li>Consumables: {{ starship.consumables }}</li>
-      <li>Hyperdrive rating: {{ starship.hyperdrive_rating }}</li>
-      <li>MGLT: {{ starship.MGLT }}</li>
-      <li>Starship Class: {{ starship.starship_class }}</li>
-    </ul>
-    <button v-if="starship.pilots.length > 0" @click="viewPilots">View Pilots</button>
-  </div>
-  <div v-else>Loading...</div>
-  <div class="pilots">
-    <RouterView />
+  <div class="container">
+    <div class="starship-item" v-if="starship">
+      <img :src="getImageUrl" width="600" alt="hola" />
+      <h1>{{ starship.name }}</h1>
+      <h2>{{ starship.model }}</h2>
+      <ul>
+        <li>Manufacturer: {{ starship.manufacturer }}</li>
+        <li>Cost In Credits: {{ starship.cost_in_credits }}</li>
+        <li>Length: {{ starship.length }}</li>
+        <li>Max Atmosphering Speed: {{ starship.max_atmosphering_speed }}</li>
+        <li>Crew: {{ starship.crew }}</li>
+        <li>cargo Capacity: {{ starship.cargo_capacity }}</li>
+        <li>Consumables: {{ starship.consumables }}</li>
+        <li>Hyperdrive rating: {{ starship.hyperdrive_rating }}</li>
+        <li>MGLT: {{ starship.MGLT }}</li>
+        <li>Starship Class: {{ starship.starship_class }}</li>
+      </ul>
+      <button v-if="starship.pilots.length > 0" @click="viewPilots">View Pilots</button>
+    </div>
+    <div v-else>Loading...</div>
+    <div class="pilots">
+      <RouterView />
+    </div>
   </div>
 </template>
 

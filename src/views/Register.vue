@@ -50,6 +50,3 @@ function register() {
     </div>
   </div>
 </template>
-
-<style>
-</style>
