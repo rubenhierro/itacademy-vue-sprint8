@@ -17,7 +17,7 @@ function login() {
   const pw = password.value
   const user = new User(name, pw)
   hasUser.value = store.hasUser(user)
-  hasPassword.value = store.hasUser(user)
+  hasPassword.value = store.hasPassword(user)
 
   if (hasUser.value && hasPassword.value) {
     store.setIsLogged(true)
@@ -52,6 +52,3 @@ function login() {
     </div>
   </div>
 </template>
-
-<style>
-</style>

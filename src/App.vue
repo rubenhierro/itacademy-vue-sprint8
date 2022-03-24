@@ -6,22 +6,22 @@ import MenuLoginComponent from './components/MenuLoginComponent.vue';
 </script>
 
 <template>
-  <header>
-    <img alt="Star Wars logo" class="logo" src="@/assets/logo-star-wars.png"  height="75" />
+  <div class="wrapper">
+    <header>
+      <img alt="Star Wars logo" class="logo" src="@/assets/logo-star-wars.png" height="75" />
 
-    <div class="login">
-      <MenuLoginComponent />
-    </div>
-    <MenuComponent />
-  </header>
+      <div class="login">
+        <MenuLoginComponent />
+      </div>
+      <MenuComponent />
+    </header>
 
-  <main>
-    <RouterView />
-  </main>
-
+    <main>
+      <RouterView />
+    </main>
+  </div>
 </template>
 
 <style>
-@import '@/assets/base.css';
-
+@import "@/assets/base.css";
 </style>
