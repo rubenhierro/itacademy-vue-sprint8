@@ -25,7 +25,7 @@ function viewPilots() {
 <template>
   <div class="container">
     <div class="starship-item" v-if="starship">
-      <img :src="getImageUrl" width="600" alt="hola" />
+      <img :src="getImageUrl" width="600" :alt="starship.name" />
       <h1>{{ starship.name }}</h1>
       <h2>{{ starship.model }}</h2>
       <ul>
@@ -51,7 +51,7 @@ function viewPilots() {
 
 <style>
 .starship-item {
-  margin: 30px;
+  
 }
 .pilots {
   margin-top: 10px;

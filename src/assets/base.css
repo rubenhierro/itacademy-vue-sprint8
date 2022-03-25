@@ -17,6 +17,12 @@ main {
   margin: auto;
 }
 
+.starship-item img {
+  margin: 10px;
+  width: 100%;
+  height: auto;
+}
+
 a:link,
 a:visited {
   color: white;
@@ -84,6 +90,5 @@ input:valid {
     padding-top: 20px;
     text-align: center;
     margin: auto;
-
   }
 }
