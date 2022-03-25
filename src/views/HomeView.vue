@@ -3,7 +3,7 @@
     <div>
       <h1>Welcome!</h1>
       <h2>This is the best page for Star Wars fans</h2>
-      <img src="../assets/lluc_soc_ton_pare.png" alt />
+      <img src="../assets/lluc_soc_ton_pare.png" />
       <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Delectus repellat id suscipit sequi, amet doloremque est nihil magni ipsam vero, omnis dolore qui quos voluptatem quo tenetur distinctio soluta culpa...</p>
     </div>
   </div>
