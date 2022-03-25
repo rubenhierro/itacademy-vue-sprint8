@@ -1,5 +1,5 @@
 body {
-  background-image: url('../assets/background.webp');
+  background-image: url("../assets/background.webp");
   box-sizing: border-box;
   background-color: black;
   color: white;
@@ -13,7 +13,7 @@ header {
 }
 
 main {
-  width: 960px;
+  max-width: 960px;
   margin: auto;
 }
 
@@ -70,10 +70,20 @@ input:valid {
 
 .container {
   display: flex;
-  justify-content: center;;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 .v-container {
   display: flex;
   flex-direction: column;
-  align-items: center;;
+  align-items: center;
+}
+@media only screen and (max-width: 600px) {
+  .login {
+    position: inherit;
+    padding-top: 20px;
+    text-align: center;
+    margin: auto;
+
+  }
 }

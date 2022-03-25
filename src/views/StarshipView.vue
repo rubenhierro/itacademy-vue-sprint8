@@ -50,6 +50,9 @@ function viewPilots() {
 </template>
 
 <style>
+.starship-item {
+  margin: 30px;
+}
 .pilots {
   margin-top: 10px;
 }
