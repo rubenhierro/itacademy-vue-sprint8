@@ -79,11 +79,13 @@ input:valid {
   justify-content: center;
   flex-wrap: wrap;
 }
+
 .v-container {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
 @media only screen and (max-width: 600px) {
   .login {
     position: inherit;
