@@ -15,13 +15,15 @@ export const starshipStore = defineStore({
   },
   actions: {
     async loadStarships() {
-      const res = await fetch(
-        `https://swapi.dev/api/starships/?page=${this.page}`
-      );
+      if (this.page <= 4) {
+        const res = await fetch(
+          `https://swapi.dev/api/starships/?page=${this.page}`
+        );
 
-      this.page++;
-      this.datasource = await res.json();
-      this.starships = [...this.starships, ...this.datasource.results];
+        this.page++;
+        this.datasource = await res.json();
+        this.starships = [...this.starships, ...this.datasource.results];
+      }
     },
     setId(id) {
       this.id = id;

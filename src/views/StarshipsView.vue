@@ -18,9 +18,10 @@ async function intersected() {
   store.loadStarships()
 }
 
-onMounted(() => intersected())
+// onMounted(() => intersected())
 </script>
 <template>
+  <Observer @intersect="intersected" />
   <div class="starships" v-if="store.dataSource">
     <div
       class="starship"
