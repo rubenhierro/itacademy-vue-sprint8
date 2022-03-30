@@ -10,18 +10,21 @@ const hasUser = ref(null)
 const hasPassword = ref(null)
 const username = ref('')
 const password = ref('')
-const input = ref(null)
 
 function login() {
-  const name = username.value
-  const pw = password.value
-  const user = new User(name, pw)
-  hasUser.value = store.hasUser(user)
-  hasPassword.value = store.hasPassword(user)
+  if (username.value && password.value) {
+    const user = new User(null, null, null, username.value, password.value)
+    hasUser.value = store.hasUser(user)
+    hasPassword.value = store.hasPassword(user)
 
-  if (hasUser.value && hasPassword.value) {
-    store.setIsLogged(true)
-    router.push({ name: 'starships' })
+    if (hasUser.value && hasPassword.value) {
+      console.log('entra al push')
+      store.setIsLogged(true)
+      router.push({ name: 'starships' })
+    }
+  } else {
+    if (!username.value) hasUser.value = false
+    if (!password.value) hasPassword.value = false
   }
 }
 </script>
@@ -32,11 +35,21 @@ function login() {
         <h1>Login</h1>
         <form id="login-form" @submit.prevent="login">
           <label for="username">User name:</label>
-          <input ref="input" type="text" id="username" v-model="username" required />
+          <input
+            type="text"
+            id="username"
+            v-model="username"
+            :class="{ invalid: hasUser === false }"
+          />
           <br />
           <p class="alert" v-if="hasUser === false">Sorry, this user don't exists!</p>
           <label for="password">Password:</label>
-          <input type="password" id="password" v-model="password" required />
+          <input
+            type="password"
+            id="password"
+            v-model="password"
+            :class="{ invalid: hasPassword === false }"
+          />
           <p class="alert" v-if="hasPassword === false">Incorrect password!</p>
           <br />
           <button>Login</button>

@@ -24,13 +24,13 @@ const router = createRouter({
       meta: {
         requiresAuth: true,
       },
-      children: [
-        {
-          path: "pilots",
-          name: "pilots",
-          component: () => import("../components/PilotsComponent.vue"),
-        },
-      ],
+      // children: [
+      //   {
+      //     path: "pilots",
+      //     name: "pilots",
+      //     component: () => import("../components/PilotsComponent.vue"),
+      //   },
+      // ],
     },
     {
       path: "/login",

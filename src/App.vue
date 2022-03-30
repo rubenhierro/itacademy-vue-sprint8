@@ -6,7 +6,7 @@ import MenuLoginComponent from './components/MenuLoginComponent.vue';
 </script>
 
 <template>
-  <div class="wrapper">
+
     <header>
       <img alt="Star Wars logo" class="logo" src="@/assets/logo-star-wars.png" height="75" />
 
@@ -19,7 +19,7 @@ import MenuLoginComponent from './components/MenuLoginComponent.vue';
     <main>
       <RouterView />
     </main>
-  </div>
+
 </template>
 
 <style>

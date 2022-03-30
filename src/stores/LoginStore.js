@@ -6,7 +6,9 @@ export const LoginStore = defineStore({
     users: JSON.parse(localStorage.getItem("userList")) || [],
     isLogged: JSON.parse(localStorage.getItem("isLogged")) || false,
   }),
-  getters: {},
+  getters: {
+    getIsLogged: (state) => state.isLogged
+  },
   actions: {
     hasUser(user) {
       return this.users.some((i) => i.username === user.username);

@@ -3,7 +3,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { starshipStore } from '../stores/StarshipsStore'
 import { storeToRefs } from 'pinia'
-
+import Pilots from '../components/PilotsComponent.vue'
 const store = starshipStore()
 const { starship } = storeToRefs(store)
 const router = useRouter()
@@ -25,7 +25,7 @@ function viewPilots() {
 <template>
   <div class="container">
     <div class="starship-item" v-if="starship">
-      <img :src="getImageUrl" width="600" alt="hola" />
+      <img :src="getImageUrl" :alt="starship.name" />
       <h1>{{ starship.name }}</h1>
       <h2>{{ starship.model }}</h2>
       <ul>
@@ -40,12 +40,13 @@ function viewPilots() {
         <li>MGLT: {{ starship.MGLT }}</li>
         <li>Starship Class: {{ starship.starship_class }}</li>
       </ul>
-      <button v-if="starship.pilots.length > 0" @click="viewPilots">View Pilots</button>
+      <!-- <button v-if="starship.pilots.length > 0" @click="viewPilots">View Pilots</button> -->
+      <div class="pilots">
+        <!-- <RouterView /> -->
+        <Pilots />
+      </div>
     </div>
     <div v-else>Loading...</div>
-    <div class="pilots">
-      <RouterView />
-    </div>
   </div>
 </template>
 
